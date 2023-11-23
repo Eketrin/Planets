@@ -136,6 +136,8 @@ namespace IGlobe
             }
 
 
+
+
             /*
             info.Description("Марс", -50, 3396, true);
             info.PrintAllPlanets();
