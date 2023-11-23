@@ -120,19 +120,17 @@ namespace IGlobe
     class Program
     {
         static void Main(string[] args)
-        {/*
-            Console.WriteLine("Введите имя объекта");
-            string name = Console.ReadLine();*/
-            string end = "";
+        {
+            string name = ""; 
             Info info = Info.Instance;
-            while (end != "Да" || end != "да")
+            while (name != "Да" && name != "да")
             {
                 Console.WriteLine("Введите имя объекта");
-                string name = Console.ReadLine();
+                name = Console.ReadLine();
 
                 info.RecordPlanet(name);
                 Console.Write("Хотите завершить программу? ");
-                end = Console.ReadLine();
+                name = Console.ReadLine();
                 Console.WriteLine();
                 
             }
@@ -145,7 +143,7 @@ namespace IGlobe
             
 
 
-            Console.ReadKey();
+            
         }
     }
 }
