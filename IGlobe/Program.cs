@@ -10,24 +10,24 @@ namespace IGlobe
     {
         double getTemperature(Planet planet);
         double getRadius(Planet planet);
-        Boolean getIsPlanet(Planet planet);
+        bool getIsPlanet(Planet planet);
     }
     public class Planet
     {
         public string NameOfPlanet { get; set; }
         public double Temperature { get; set; }
         public double Radius { get; set; }
-        public Boolean IsPlanet { get; set; }
+        public bool IsPlanet { get; set; }
     }
     class Info : IGlobe
     {
         public static Info instance;
         public List<Planet> listOfPlanets;
-        public List<string> namesOfPlanets;
+        public List<string> listNamesOfPlanets;
         private Info()
         {
             listOfPlanets = new List<Planet>();
-            namesOfPlanets = new List<string>();
+            listNamesOfPlanets = new List<string>();
         }
         public static Info Instance
         {
@@ -48,13 +48,18 @@ namespace IGlobe
         {
             return planet.Radius;
         }
-        public Boolean getIsPlanet(Planet planet)
+        public bool getIsPlanet(Planet planet)
         {
             return planet.IsPlanet;
         }
         public void Description(string InputName, double Temperature,
-                        double Radius, Boolean IsPlanet)
+                        double Radius, string IsPlanett)
         {
+            bool IsPlanet = false;
+            if (IsPlanett == "да" || IsPlanett == "Да")
+            {
+                IsPlanet = true;
+            }
             Planet newPlanet = new Planet
             {
                 NameOfPlanet = InputName,
@@ -62,6 +67,7 @@ namespace IGlobe
                 Radius = Radius, 
                 IsPlanet = IsPlanet
             };
+            listNamesOfPlanets.Add(InputName.ToLower());
             listOfPlanets.Add(newPlanet);
         }
         public void PrintAllPlanets()
@@ -73,20 +79,65 @@ namespace IGlobe
                     $"Температура: {pl.Temperature}°С\nРадиус: {pl.Radius} км\nЯвляется планетой: {pl.IsPlanet}");
             }
         }
+        public void PrintOnePlanet(string name)
+        {
+            Console.WriteLine($"Характеристики объекта:\n");
+            foreach (var pl in listOfPlanets)
+            {
+                Console.WriteLine($"Названиие: {pl.NameOfPlanet}\n" +
+                    $"Температура: {pl.Temperature}°С\nРадиус: {pl.Radius} км\nЯвляется планетой: {pl.IsPlanet}");
+            }
+        }
+        public void RecordPlanet(string name)
+        {
+            if (!listNamesOfPlanets.Contains(name.ToLower()))
+            {
+                Console.WriteLine();
+                Console.Write("Укажите температуру  ");
+                double temp = Convert.ToDouble(Console.ReadLine());
+                Console.Write("Укажите радиус  ");
+                double rad = Convert.ToDouble(Console.ReadLine());
+                Console.Write("Этот объект является планетой?  ");
+                string ispl = Console.ReadLine();
+                Description(name, temp, rad, ispl);
+            }
+            else
+            {
+                Console.WriteLine("Такая планета уже существует");
+                Console.WriteLine("Хотите посмотреть описание?");
+                string answer = Console.ReadLine();
+                if (answer == "Да" || answer == "да")
+                {
+                    PrintOnePlanet(name);
+                }
+            }
+        }
     }
     class Program
     {
         static void Main(string[] args)
-        {
-            Console.WriteLine("Введите имя новой пленеты");
-            while (true)
-            {
-
-            }
+        {/*
+            Console.WriteLine("Введите имя объекта");
+            string name = Console.ReadLine();*/
+            string end = "";
             Info info = Info.Instance;
+            while (end != "Да" || end != "да")
+            {
+                Console.WriteLine("Введите имя объекта");
+                string name = Console.ReadLine();
+
+                info.RecordPlanet(name);
+                Console.Write("Хотите завершить программу?  ");
+                end = Console.ReadLine();
+                Console.WriteLine();
+                
+            }
+
+
+            /*
             info.Description("Марс", -50, 3396, true);
             info.PrintAllPlanets();
-            Console.ReadKey();
+            Console.ReadKey();*/
             
 
 
