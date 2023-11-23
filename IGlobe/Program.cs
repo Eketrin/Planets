@@ -84,8 +84,12 @@ namespace IGlobe
             Console.WriteLine($"Характеристики объекта:\n");
             foreach (var pl in listOfPlanets)
             {
-                Console.WriteLine($"Названиие: {pl.NameOfPlanet}\n" +
+                if (pl.NameOfPlanet.ToLower() == name.ToLower())
+                {
+                    Console.WriteLine($"Названиие: {pl.NameOfPlanet}\n" +
                     $"Температура: {pl.Temperature}°С\nРадиус: {pl.Radius} км\nЯвляется планетой: {pl.IsPlanet}");
+                }
+                
             }
         }
         public void RecordPlanet(string name)
@@ -127,7 +131,7 @@ namespace IGlobe
                 string name = Console.ReadLine();
 
                 info.RecordPlanet(name);
-                Console.Write("Хотите завершить программу?  ");
+                Console.Write("Хотите завершить программу? ");
                 end = Console.ReadLine();
                 Console.WriteLine();
                 
